@@ -7,7 +7,7 @@ import java.util.Comparator;
  * @param <T> тип элементов списка.
  */
 public class MyArrayList<T> implements MyList<T> {
-    private final int DEFAULT_SIZE = 10;    // Стандартный размер массива.
+    private static final int DEFAULT_SIZE = 10;    // Стандартный размер массива.
     private int size;                       // Текущий размер массива.
     private int elNumber;                   // Количество элементов в массиве.
     private T[] array;                      // Массив, с которым проводятся манипуляции.
