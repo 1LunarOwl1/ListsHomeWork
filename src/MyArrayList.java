@@ -13,6 +13,9 @@ public class MyArrayList<T> implements MyList<T> {
     private T[] array;                      // Массив, с которым проводятся манипуляции.
 
     public MyArrayList() {
+        size = DEFAULT_SIZE;
+        elNumber = 0;
+        array = null;
     }
 
     /**
@@ -25,6 +28,7 @@ public class MyArrayList<T> implements MyList<T> {
 
         this.size = size;
         elNumber = 0;
+        array = null;
     }
 
     public void add(T elem) {
@@ -127,7 +131,6 @@ public class MyArrayList<T> implements MyList<T> {
      * Если массив не создан, создает его со стандартным размером.
      */
     private void resize() {
-        if (size == 0) size = DEFAULT_SIZE;
         if (array == null) {
             array = (T[]) new Object[size];
             return;

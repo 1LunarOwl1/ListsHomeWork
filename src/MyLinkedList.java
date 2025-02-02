@@ -157,6 +157,8 @@ public class MyLinkedList<T> implements MyList<T> {
      * @return необходимый узел.
      */
     private Node<T> getNode(int index) {
+        if (head == null || tail == null) return null;
+
         Node<T> node;
 
         if (index < (size / 2)) {
@@ -183,6 +185,8 @@ public class MyLinkedList<T> implements MyList<T> {
      * @return узел, содержащий необходимый элемент.
      */
     private Node<T> getNode(T elem) {
+        if (head == null) return null;
+
         Node<T> node = head;
 
         for (int i = 0; i < size; i++) {
