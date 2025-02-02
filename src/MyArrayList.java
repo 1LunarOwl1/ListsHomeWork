@@ -12,7 +12,7 @@ public class MyArrayList<T> implements MyList<T> {
     private int elNumber;                   // Количество элементов в массиве.
     private T[] array;                      // Массив, с которым проводятся манипуляции.
 
-    MyArrayList() {
+    public MyArrayList() {
     }
 
     /**
@@ -20,22 +20,21 @@ public class MyArrayList<T> implements MyList<T> {
      *
      * @param size размер массива.
      */
-    MyArrayList(int size) {
+    public MyArrayList(int size) {
         if (size < 0) throw new IllegalArgumentException();
 
         this.size = size;
-        array = (T[]) new Object[size];
         elNumber = 0;
     }
 
     public void add(T elem) {
-        if (elNumber == size) resize();
+        if (elNumber == size || array == null) resize();
         array[elNumber++] = elem;
     }
 
     public void add(int index, T elem) {
-        if (index >= elNumber + 1 || index < 0) throw new IndexOutOfBoundsException();
-        else if (elNumber == size) resize();
+        if (index > elNumber || index < 0) throw new IndexOutOfBoundsException();
+        else if (elNumber == size || array == null) resize();
 
         for (int i = size - 1; i > index; i--) {
             array[i] = array[i - 1];
@@ -61,6 +60,7 @@ public class MyArrayList<T> implements MyList<T> {
 
         if (elIndex == -1) return false;
 
+        array[elIndex] = null;
         for (int i = elIndex; i < elNumber - 1; i++) {
             array[i] = array[i + 1];
         }
@@ -81,7 +81,20 @@ public class MyArrayList<T> implements MyList<T> {
         }
         for (int i = 1; i < elNumber; i++) {
             for (int j = 0; j < elNumber - i; j++) {
-                if (c.compare(array[j], array[j + 1]) >= 0) {
+                T a = array[j];
+                T b = array[j + 1];
+
+                if (a == null && b == null) continue;
+
+                if (a == null) {
+                    array[j] = b;
+                    array[j + 1] = a;
+                    continue;
+                }
+
+                if (b == null) continue;
+
+                if (c.compare(array[j], array[j + 1]) > 0) {
                     T temp = array[j];
                     array[j] = array[j + 1];
                     array[j + 1] = temp;
@@ -114,8 +127,8 @@ public class MyArrayList<T> implements MyList<T> {
      * Если массив не создан, создает его со стандартным размером.
      */
     private void resize() {
-        if (size == 0) {
-            size = DEFAULT_SIZE;
+        if (size == 0) size = DEFAULT_SIZE;
+        if (array == null) {
             array = (T[]) new Object[size];
             return;
         }
