@@ -64,10 +64,10 @@ public class MyArrayList<T> implements MyList<T> {
 
         if (elIndex == -1) return false;
 
-        array[elIndex] = null;
         for (int i = elIndex; i < elNumber - 1; i++) {
             array[i] = array[i + 1];
         }
+        array[elNumber - 1] = null;
 
         elNumber--;
         size--;
